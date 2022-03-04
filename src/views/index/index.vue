@@ -1,0 +1,116 @@
+<template>
+  <div class="dashboard-container">
+    <!-- 碎片之banner -->
+    <banner-content />
+    <!-- slide -->
+    <service-list />
+    <!-- 要点 -->
+    <points>
+      <index-title slot="title" name="平台服务" sub-name="PLATFORM SERVICE" />
+    </points>
+    <!-- 最新服务 -->
+    <latest-service />
+    <!-- 人气推荐 -->
+    <!-- <recommend>
+      <index-title slot="title" name="人气推荐" sub-name="RECOMMEND" />
+    </recommend> -->
+    <!-- 电商平台 -->
+    <enterprise>
+      <!-- title -->
+      <index-title slot="title" name="电商平台" sub-name="E-COMMERCE PLATFORM" />
+      <!-- more -->
+      <more slot="more" to="/" />
+    </enterprise>
+    <!-- 金融服务 -->
+    <service-financial>
+      <!-- title -->
+      <index-title slot="title" theme="blue" name="金融服务" sub-name="FINANCIAL SERVICES" />
+      <!-- more -->
+      <more slot="more" to="/" />
+    </service-financial>
+    <!-- 物流服务 -->
+    <service-logistics>
+      <!-- title -->
+      <index-title slot="title" theme="blue" name="物流服务" sub-name="LOGISTICS SERVICE" />
+      <!-- more -->
+      <more slot="more" to="/" />
+    </service-logistics>
+    <div class="concat">
+      <!-- 新闻 -->
+      <news />
+    </div>
+    <partner>
+      <index-title slot="title" name="合作平台" sub-name="JOINT VENTURE" />
+    </partner>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+import BannerContent from './components/BannerContent'
+import Points from './components/Points'
+import LatestService from './components/LatestService'
+import Recommend from './components/Recommend'
+import News from './components/News'
+import Partner from './components/Partner'
+import Enterprise from './components/Enterprise.vue'
+import ServiceFinancial from './components/ServiceFinancial.vue'
+import ServiceLogistics from './components/ServiceLogistics.vue'
+import ServiceList from './components/ServiceList.vue'
+import More from './components/More.vue'
+import IndexTitle from './components/Title.vue'
+export default {
+  name: 'Index',
+  components: { BannerContent, Points, LatestService, Recommend, Enterprise, ServiceFinancial, ServiceLogistics, News, Partner, ServiceList, More, IndexTitle },
+  data() {
+    return {
+
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.dashboard {
+  &-text {
+    font-size: 30px;
+    line-height: 46px;
+  }
+}
+.concat {
+  margin-bottom: 80px;
+}
+
+@media only screen and (max-width:1199px){
+  .concat {
+    margin-bottom: 60px;
+  }
+}
+@media only screen and (max-width:991px){
+  .concat {
+    margin-bottom: 40px;
+    ::v-deep {
+      .recommend-container {
+        padding: 0;
+        border: none;
+        margin-top: 40px;
+      }
+    }
+  }
+}
+@media only screen and (max-width:767px){
+  .concat {
+    margin-bottom: 30px;
+    ::v-deep {
+      .recommend-container {
+        margin-top: 30px;
+      }
+    }
+  }
+}
+</style>

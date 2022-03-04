@@ -1,0 +1,147 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './sidebar.scss';
+@import './element-ui.scss';
+
+@font-face {  font-family: SF-Heading-font;  font-weight:400;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Regular.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Heading-font;  font-weight:500;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Medium.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Heading-font;  font-weight:600;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-SemiBold.ttf?v=1618297125);  font-display: swap;}
+@font-face {  font-family: SF-Body-font;  font-weight:400;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Regular.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Body-font;  font-weight:500;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Medium.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Body-font;  font-weight:600;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-SemiBold.ttf?v=1618297125);  font-display: swap;}:root {  --font-stack-body: 'SF-Body-font';  --font-weight-body: 400;;}
+
+body {
+  height: 100%;
+  font-size: 16px;
+  color: #333;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'SF-Body-font', Microsoft YaHei, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Arial, sans-serif;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
+body::-webkit-scrollbar {
+  width: 8px;
+}
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+body::-webkit-scrollbar-track {
+  background: #fff;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  transition: all .3s;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+dl, dd {
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  font-weight: normal;
+}
+div:focus {
+  outline: none;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.flex-auto {
+  flex: 1;
+}
+.flex-fixed {
+  flex: 0 0 auto;
+}
+.flex-column {
+  flex-direction: column;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.bg-white {
+  background-color: #fff;
+}
+.bg-red {
+  background-color: #da3f3f;
+}
+.no-border {
+  border: none;
+}
+// main-container global css
+.container {
+  position: relative;
+  max-width: 1750px;
+  width: 100%;
+  padding-left: 65px;
+  padding-right: 65px;
+  margin: 0 auto;
+}
+// ::selection {
+//   color: #fff;
+//   background-color: $mainColor;
+// }
+@media only screen and (max-width:1536px){
+  .container {
+    padding-left: 52px;
+    padding-right: 52px;
+  }
+}
+@media only screen and (max-width:1024px){
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
