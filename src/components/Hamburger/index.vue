@@ -34,15 +34,15 @@ export default {
     position: absolute;
     top: calc(50% - 1px);
     right: 6px;
-    width: 15px;
-    border-top: 1px solid #A0A5BA;
+    width: 20px;
+    border-top: 2px solid #000;
     vertical-align: top;
     &:first-child {
-      margin-top: -4px;
+      margin-top: -7px;
     }
     &:last-child {
-      width: 8px;
-      margin-top: 4px;
+      // width: 8px;
+      margin-top: 7px;
     }
   }
 }

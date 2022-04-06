@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <el-row
       type="flex"
       align="middle"
@@ -8,22 +8,25 @@
     >
       <!-- horizontal vertical -->
       <!-- :collapse="isCollapse" -->
-      <el-col :span="10">
+      <!-- device === 'mobile' ? 'vertical' : 'horizontal' -->
+      <el-col :md="18" :lg="16">
         <el-scrollbar wrap-class="scrollbar-wrapper">
           <el-menu
+            ref="customMenu"
             :default-active="activeMenu"
             :text-color="variables.menuText"
             :unique-opened="false"
             :active-text-color="variables.menuActiveText"
             :collapse-transition="false"
-            :mode="device === 'mobile' ? 'vertical' : 'horizontal'"
+            :mode="'horizontal'"
           >
-            <sidebar-item v-for="route in routes" :key="route.path" :item="route" :show-icon="false" :base-path="route.path" />
+            <sidebar-item v-for="route in routes" :key="route.path" :item="route" :show-icon="false" :base-path="route.path" @back="onCloseSubmenu" />
           </el-menu>
         </el-scrollbar>
       </el-col>
-      <el-col :span="10">
-        <operate />
+      <el-col :md="6" :lg="8">
+        <operate v-if="device !== 'mobile'" />
+        <account v-else />
       </el-col>
     </el-row>
   </div>
@@ -34,16 +37,25 @@ import { mapGetters } from 'vuex'
 import Operate from './Operate'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
-
+import { menuRoutes } from '@/router'
+import path from 'path'
 export default {
-  components: { SidebarItem, Operate },
+  components: { SidebarItem, Operate, Account: () => import('@/views/account/components/Account') },
   computed: {
     ...mapGetters([
       'sidebar',
       'device'
     ]),
-    routes({ $router }) {
-      return $router.options.routes
+    routes() {
+      const customRoute = []
+      customRoute.push(menuRoutes[0])
+      for (const item of menuRoutes[1].children) {
+        customRoute.push({
+          ...item,
+          path: path.resolve(menuRoutes[1].path, item.path)
+        })
+      }
+      return customRoute
     },
     activeMenu() {
       const route = this.$route
@@ -60,6 +72,18 @@ export default {
     isCollapse() {
       return !this.sidebar.opened
     }
+  },
+  methods: {
+    onCloseSubmenu(i) {
+      this.$refs.customMenu.close(i)
+    }
   }
 }
 </script>
+<style lang="scss" scoped>
+  .container-fluid {
+    .el-row {
+      margin: 0 -16px;
+    }
+  }
+</style>

@@ -1,25 +1,16 @@
 <template>
   <div class="top-operate">
-    <el-row type="flex" justify="end" align="middle">
+    <el-row type="flex" justify="end" align="middle" class="nav-operate">
       <!-- Search -->
       <el-tooltip
         class="item"
         effect="dark"
         content="Search"
         placement="bottom"
+        :disabled="device === 'mobile'"
       >
-        <el-button plain class="no-border" size="small" type="primary">
-          <svg
-            fill="currentColor"
-            stroke="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            class="svg-18"
-          >
-            <path
-              d="M508.5 468.9L387.1 347.5c-2.3-2.3-5.3-3.5-8.5-3.5h-13.2c31.5-36.5 50.6-84 50.6-136C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c52 0 99.5-19.1 136-50.6v13.2c0 3.2 1.3 6.2 3.5 8.5l121.4 121.4c4.7 4.7 12.3 4.7 17 0l22.6-22.6c4.7-4.7 4.7-12.3 0-17zM208 368c-88.4 0-160-71.6-160-160S119.6 48 208 48s160 71.6 160 160-71.6 160-160 160z"
-            />
-          </svg>
+        <el-button plain class="no-border" size="small" @click="openSearchDialog">
+          <svg-icon icon-class="search" class-name="svg-18" />
         </el-button>
       </el-tooltip>
       <!-- Account -->
@@ -28,19 +19,10 @@
         effect="dark"
         content="Account"
         placement="bottom"
+        :disabled="device === 'mobile'"
       >
-        <el-link :underline="false" class="no-hover">
-          <svg
-            fill="currentColor"
-            stroke="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-            class="svg-20"
-          >
-            <path
-              d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
-            />
-          </svg>
+        <el-link :underline="false" class="no-hover" @click="linkAccount">
+          <svg-icon icon-class="account" class-name="svg-20" />
         </el-link>
       </el-tooltip>
       <!-- Wishlist -->
@@ -49,14 +31,11 @@
         effect="dark"
         content="Wishlist"
         placement="bottom"
+        :disabled="device === 'mobile'"
       >
-        <el-link :underline="false" class="no-hover">
-          <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-20">
-            <path
-              d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"
-            />
-          </svg>
-          <sup class="red-count">1</sup>
+        <el-link :underline="false" class="no-hover" @click="linkWishlist">
+          <svg-icon icon-class="wish" class-name="svg-20" />
+          <sup class="red-count">{{ wishlistNum }}</sup>
         </el-link>
       </el-tooltip>
       <!-- Cart -->
@@ -65,47 +44,192 @@
         effect="dark"
         content="Cart"
         placement="bottom"
+        :disabled="device === 'mobile'"
       >
-        <el-link :underline="false" class="no-hover">
-          <svg fill="currentColor" stroke="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-20">
-            <path
-              d="M352 128C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128H0v304c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V128h-96zM224 48c44.112 0 80 35.888 80 80H144c0-44.112 35.888-80 80-80zm176 384c0 17.645-14.355 32-32 32H80c-17.645 0-32-14.355-32-32V176h48v40c0 13.255 10.745 24 24 24s24-10.745 24-24v-40h160v40c0 13.255 10.745 24 24 24s24-10.745 24-24v-40h48v256z"
-            />
-          </svg>
+        <el-link :underline="false" class="no-hover" @click.native="onOpenCart">
+          <svg-icon icon-class="cart" class-name="svg-20" />
+          <sup class="red-count">{{ cartNum }}</sup>
         </el-link>
       </el-tooltip>
     </el-row>
-    <el-dialog title="" :visible.sync="visible" center>
-      <el-form ref="form" :model="formData" class="search-form">
-        <el-form-item>
-          <el-input
-            v-model="formData.keyword"
-            placeholder="Search products"
-            @keyup.enter.native="onSubmit('form')"
-          />
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+    <!-- 搜索窗口 -->
+    <el-drawer title="Search our store" :visible.sync="searchVisible" :modal-append-to-body="false" direction="ttb" :size="isXs ? '100%' : '30%'" :with-header="isXs" class="search-drawer">
+      <div class="container-fluid">
+        <el-row type="flex" justify="space-between">
+          <el-col :sm="4" class="hidden-xs-only" />
+          <el-col :xs="24" :md="16">
+            <el-form ref="form" :model="formData" class="search-form">
+              <el-form-item>
+                <el-input
+                  v-model="formData.keyword"
+                  placeholder="Search products"
+                  @keyup.enter.native="onSubmit('form')"
+                >
+                  <el-button slot="suffix" size="small" plain class="no-border">
+                    <svg-icon icon-class="search" class-name="svg-18" />
+                  </el-button>
+                </el-input>
+              </el-form-item>
+            </el-form>
+          </el-col>
+          <el-col class="hidden-xs-only" :sm="4">
+            <el-row type="flex" justify="end" align="middle" class="search-operate">
+              <!-- Account -->
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="Account"
+                placement="bottom"
+              >
+                <el-link :underline="false" class="no-hover" @click="linkAccount">
+                  <svg-icon icon-class="account" class-name="svg-20" />
+                </el-link>
+              </el-tooltip>
+              <!-- Wishlist -->
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="Wishlist"
+                placement="bottom"
+              >
+                <el-link :underline="false" class="no-hover" @click="linkWishlist">
+                  <svg-icon icon-class="wish" class-name="svg-20" />
+                  <sup class="red-count">{{ wishlistNum }}</sup>
+                </el-link>
+              </el-tooltip>
+              <!-- Cart -->
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="Cart"
+                placement="bottom"
+              >
+                <el-link :underline="false" class="no-hover" @click.native="onOpenCart">
+                  <svg-icon icon-class="cart" class-name="svg-20" />
+                  <sup class="red-count">{{ cartNum }}</sup>
+                </el-link>
+              </el-tooltip>
+            </el-row>
+          </el-col>
+        </el-row>
+        <el-row type="flex" class="flex-wrap popular-row">
+          <span class="popular">Popular Searches:</span>
+          <el-row type="flex" align="middle" class="flex-wrap">
+            <el-link v-for="word of recommend" :key="word" class="no-hover link" @click.native="onLink(word)">
+              {{ word }}
+            </el-link>
+          </el-row>
+        </el-row>
+      </div>
+    </el-drawer>
+    <!-- 购物车窗口 -->
+    <el-drawer title="Shopping Cart" :visible.sync="cartVisible" :modal-append-to-body="false" direction="rtl" size="90%" class="cart-drawer" @closed="onCloseDrawer">
+      <!-- 购物列表 -->
+      <el-scrollbar class="cart-list-scrollbar">
+        <div class="cart-list-wrap">
+          <cart-item v-for="item of cartList" :key="item.id" :item="item" />
+        </div>
+      </el-scrollbar>
+      <!-- 功能条 价格汇总 -->
+      <pay-total ref="payTotal" :total="10" @close="closeCartDialog" />
+    </el-drawer>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Operate',
+  components: {
+    PayTotal: () => import('@/components/PayTotal'),
+    CartItem: () => import('@/components/CartItem')
+  },
   data() {
     return {
-      visible: false,
+      searchVisible: false,
+      cartVisible: false,
+      wishlistNum: 1,
+      cartNum: 1,
       formData: {
         keyword: ''
-      }
+      },
+      recommend: ['Shirt', 'Jacket', 'NBA', 'NFL', 'MLB', 'Baseball Jacket', 'Hoodie'],
+      cartList: [{
+        id: 1,
+        thumb: 'https://cdn.shopify.com/s/files/1/0551/6233/9488/products/4-3_540x.jpg?v=1644827259',
+        good_name: 'Custom Unisex Royal-White-Yellow Authentic Baseball Lightweight Jacket',
+        price: '39.99',
+        num: 1
+      }],
+      isXs: false
     }
   },
-  methods: {
-    openDialog() {
-      this.visible = true
+  computed: {
+    device({ $store }) {
+      return $store.getters.device
     },
-    closeDialog() {
-      this.visible = false
+    token({ $store }) {
+      return $store.getters.token
+    }
+  },
+  beforeMount() {
+    window.addEventListener('resize', this.resizeDialog)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resizeDialog)
+  },
+  mounted() {
+    this.resizeDialog()
+  },
+  methods: {
+    linkWishlist() {
+      this.closeSearchDialog()
+      this.$router.push('/wishlist')
+    },
+    linkAccount() {
+      this.closeSearchDialog()
+      if (this.token) {
+        this.$router.push('/account/info')
+      } else {
+        this.$router.push('/account/login')
+      }
+    },
+    onCloseDrawer() {
+      this.$nextTick(() => {
+        this.$refs.payTotal.closeAllDrawer()
+      })
+    },
+    resizeDialog() {
+      const { body } = document
+      const rect = body.getBoundingClientRect()
+      this.isXs = rect.width < 768
+    },
+    onLink(word) {
+
+    },
+    onSubmit(form) {
+      this.$refs[form].validate((valid) => {
+        // if (valid) {
+        // }
+      })
+    },
+    openSearchDialog() {
+      this.searchVisible = true
+    },
+    closeSearchDialog() {
+      this.searchVisible = false
+    },
+    onOpenCart() {
+      if (!this.cartNum || this.$route.path.includes('/cart')) {
+        this.$router.push('/cart')
+        return
+      }
+      this.openCartDialog()
+    },
+    openCartDialog() {
+      this.cartVisible = true
+    },
+    closeCartDialog() {
+      this.cartVisible = false
     }
   }
 }
@@ -115,21 +239,10 @@ export default {
 @import '~@/styles/variables';
 .top-operate {
   svg {
-    display: inline-block;
     vertical-align: middle;
   }
-  .svg-18 {
-    width: 18px;
-    height: 18px;
-    max-height: 18px;
-  }
-  .svg-20 {
-    width: 20px;
-    height: 20px;
-    max-height: 20px;
-  }
   .el-link {
-    padding: 19px 13px;
+    padding: 20px 13px;
   }
   .red-count {
     position: absolute;
@@ -146,14 +259,151 @@ export default {
     border-radius: 12px;
   }
 }
-.sidebar-logo-container {
-}
-@media only screen and (max-width: 991px) {
-  .sidebar-logo-container {
+.search-drawer {
+  ::placeholder {
+    color: #9ca3af;
+  }
+  ::v-deep {
+    .el-drawer__body {
+      padding: 32px 0;
+    }
+    .el-input__inner {
+      height: 44px;
+      padding-left: 12px;
+      padding-right: 50px;
+      line-height: 44px;
+      font-size: 16px;
+      border-color: $mainColor;
+      color: $mainColor;
+    }
+  }
+  .el-form-item {
+    margin-bottom: 12px;
+  }
+  .popular {
+    margin-right: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    color: $grayLinkColor;
+  }
+  .link {
+    padding: 0;
+    margin-right: 16px;
+    line-height: 24px;
+    font-size: 16px;
+    white-space: nowrap;
+    &::after {
+      bottom: 4px;
+    }
+  }
+  .search-operate {
+    .el-link {
+      padding: 13px 13px;
+    }
+    .red-count {
+      top: 4px;
+    }
+  }
+  .search-form {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .popular-row {
+    justify-content: center;
   }
 }
+.cart-drawer {
+  .cart-list-wrap {
+    padding: 0 24px 16px;
+  }
+  .cart-list-scrollbar {
+    height: calc(100vh - 74px - 225px);
+  }
+  ::v-deep {
+    .is-vertical {
+      display: block !important;
+    }
+    .el-scrollbar__wrap {
+      overflow-x: hidden;
+    }
+    .el-drawer {
+      max-width: 450px;
+      left: auto;
+    }
+    .el-drawer__header {
+      margin: 0 24px;
+      padding: 24px 0px 16px;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 32px;
+      color: $mainColor;
+      border-bottom: 1px solid #dedede;
+    }
+    .el-drawer__close-btn {
+      position: relative;
+      top: -10px;
+      font-size: 26px;
+    }
+    .el-dialog__close {
+      font-weight: 600;
+    }
+  }
+  .el-form-item {
+    margin-bottom: 12px;
+  }
+  .popular {
+    margin-right: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    color: $grayLinkColor;
+  }
+  .search-form {
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+@media only screen and (max-width: 991px) {
+}
 @media only screen and (max-width: 767px) {
-  .sidebar-logo-container {
+  .search-drawer {
+    ::v-deep {
+      .el-drawer__header {
+        margin-bottom: 0;
+        padding: 16px 16px 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: $mainColor;
+      }
+      .el-dialog__close {
+        font-weight: 600;
+      }
+      .el-drawer__body {
+        padding: 8px 0;
+      }
+    }
+    .search-form {
+      width: 100%;
+    }
+    .popular-row {
+      justify-content: flex-start;
+    }
+  }
+  .cart-drawer {
+    .cart-list-scrollbar {
+      height: calc(100vh - 66px - 225px);
+    }
+    ::v-deep {
+      .el-drawer__header {
+        margin: 0;
+        padding: 16px;
+      }
+      .el-drawer__close-btn {
+        top: -6px;
+        right: -6px;
+        font-size: 24px;
+      }
+    }
+
   }
 }
 </style>

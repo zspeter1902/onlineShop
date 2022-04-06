@@ -155,6 +155,19 @@ export function debounce(func, wait, immediate) {
     return result
   }
 }
+// throttle
+export function throttle(func, wait = 300) {
+  let last = 0
+  return function() {
+    const context = this
+    const args = arguments
+    const now = +new Date()
+    if (now - last >= wait) {
+      func.apply(context, args)
+      last = now
+    }
+  }
+}
 /**
  * 获取uuid
  * @returns {string}

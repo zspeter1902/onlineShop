@@ -3,7 +3,7 @@ import Vue from 'vue'
 import {
   Pagination,
   Dialog,
-  // Drawer,
+  Drawer,
   // Autocomplete,
   Dropdown,
   DropdownMenu,
@@ -41,7 +41,7 @@ import {
   TabPane,
   Tag,
   // Tree,
-  // Alert,
+  Alert,
   // Slider,
   Icon,
   Row,
@@ -49,15 +49,15 @@ import {
   Upload,
   // Progress,
   // Spinner,
-  // Badge,
+  Badge,
   Card,
   Rate,
   // Steps,
   // Step,
   // Carousel,
   // CarouselItem,
-  // Collapse,
-  // CollapseItem,
+  Collapse,
+  CollapseItem,
   // ColorPicker,
   // Transfer,
   // Container,
@@ -87,7 +87,7 @@ import {
 // Vue.use(avatar)
 Vue.use(Pagination)
 Vue.use(Dialog)
-// Vue.use(Drawer)
+Vue.use(Drawer)
 // Vue.use(Autocomplete)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
@@ -125,7 +125,7 @@ Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Tag)
 // Vue.use(Tree)
-// Vue.use(Alert)
+Vue.use(Alert)
 // Vue.use(Slider)
 Vue.use(Icon)
 Vue.use(Row)
@@ -133,15 +133,15 @@ Vue.use(Col)
 Vue.use(Upload)
 // Vue.use(Progress)
 // Vue.use(Spinner)
-// Vue.use(Badge)
+Vue.use(Badge)
 Vue.use(Card)
 Vue.use(Rate)
 // Vue.use(Steps)
 // Vue.use(Step)
 // Vue.use(Carousel)
 // Vue.use(CarouselItem)
-// Vue.use(Collapse)
-// Vue.use(CollapseItem)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 // Vue.use(ColorPicker)
 // Vue.use(Transfer)
 // Vue.use(Container)

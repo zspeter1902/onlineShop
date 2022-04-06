@@ -1,44 +1,133 @@
 <template>
-  <div class="footer-container">
-    <div class="container">
-      <h5 class="title">友情链接</h5>
-      <el-row type="flex" tag="ul" :gutter="20" class="list flex-wrap">
-        <el-col v-for="news of list" :key="news.id" :sm="12" :md="8" :lg="6" tag="li">
-          <el-link :underline="false" :href="news.link" target="_blank">
-            <h5>{{ news.title }}</h5>
-          </el-link>
-        </el-col>
-      </el-row>
-      <h5 class="title">法律声明</h5>
-      <div class="desc">
-        本网站所载的材料和信息，均源自第三方企业提供。安徽省跨境电商公共服务平台对此等材料和信息的准确性、完整性、充分性和可靠性不做评判，并且声明不对此等材料和信息的错误或遗漏承担任何法律责任，也无法对此等材料和信息作出任何明示或默示的担保，不构成对这些产品、服务的认可或推荐。
-      </div>
-      <div class="copyright text-center">
-        <p>Copyright © 2021 Cross-border E-commerce Public Service Platform of Anhui Province 安徽省跨境电商公共服务平台</p>
-        <p>
-          <a target="_blank" rel="noopener norefferrer nofollow" href="https://beian.miit.gov.cn/">皖ICP备xxxxxxxx号</a>
-          <el-image class="icon" :src="icon" fit="contain" />
-          <a target="_blank" rel="noopener norefferrer nofollow" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011502016144">皖公网安备 xxxxxxxxxxxxxx号</a>
-        </p>
+  <footer class="footer-container">
+    <div class="footer-nav border-bottom">
+      <div class="container-fluid">
+        <el-row type="flex" :gutter="device === 'mobile' ? 0 : 64" class="flex-wrap hidden-xs-only">
+          <el-col :sm="12" :md="12" :lg="5" tag="dl" class="border-right order-4">
+            <dt>Subscribe</dt>
+            <dd class="subscribe">
+              <p class="">Any question:<br>service@mynamecustom.com</p>
+            </dd>
+            <dd>
+              <el-form ref="form" :model="formData" :rules="rules" class="search-form">
+                <el-form-item prop="email">
+                  <el-input
+                    v-model="formData.email"
+                    placeholder="Enter your email"
+                    @keyup.enter.native="onSubmit('form')"
+                  >
+                    <svg-icon slot="prefix" icon-class="message" class-name="svg-16" />
+                    <el-button slot="suffix" plain class="no-border" @click="onSubmit('form')">
+                      <svg-icon icon-class="arrow-right" class-name="svg-16" />
+                    </el-button>
+                  </el-input>
+                </el-form-item>
+              </el-form>
+            </dd>
+          </el-col>
+          <el-col :sm="12" :md="12" :lg="5" tag="dl" class="border-right order-1">
+            <dt>Information</dt>
+            <dd v-for="news of infoList" :key="news.path">
+              <router-link :to="news.path">
+                {{ news.meta.title }}
+              </router-link>
+            </dd>
+          </el-col>
+          <el-col :sm="12" :md="12" :lg="5" tag="dl" class="border-right order-2">
+            <dt>Quick links</dt>
+            <dd v-for="news of quickList" :key="news.path">
+              <router-link :to="news.path">
+                {{ news.meta.title }}
+              </router-link>
+            </dd>
+          </el-col>
+          <el-col :sm="12" :md="12" :lg="9" tag="dl" class="border-right order-3">
+            <dt>Our store</dt>
+            <dd class="desc">
+              <p>Personalized Gifts For     Life's Most Meaningful Moments <br> Make any occasion special with a personalized gift.</p>
+              <p>You can find the perfect item for your recipient with MynameCustom.</p>
+            </dd>
+          </el-col>
+        </el-row>
+        <el-collapse class="hidden-sm-and-up">
+          <el-collapse-item title="Subscribe" name="1">
+            <div class="subscribe">
+              <p class="">Any question:<br>service@mynamecustom.com</p>
+            </div>
+            <el-form ref="form" :model="formData" :rules="rules" class="search-form">
+              <el-form-item prop="email">
+                <el-input
+                  v-model="formData.email"
+                  placeholder="Enter your email"
+                  @keyup.enter.native="onSubmit('form')"
+                >
+                  <svg-icon slot="prefix" icon-class="message" class-name="svg-16" />
+                  <el-button slot="suffix" plain class="no-border" @click="onSubmit('form')">
+                    <svg-icon icon-class="arrow-right" class-name="svg-16" />
+                  </el-button>
+                </el-input>
+              </el-form-item>
+            </el-form>
+          </el-collapse-item>
+          <el-collapse-item title="Information" name="2">
+            <div v-for="news of infoList" :key="news.path" class="list">
+              <router-link :to="news.path">
+                {{ news.meta.title }}
+              </router-link>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item title="Quick links" name="3">
+            <div v-for="news of quickList" :key="news.path" class="list">
+              <router-link :to="news.path">
+                {{ news.meta.title }}
+              </router-link>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item title="Our store" name="4">
+            <div class="desc">
+              <p>Personalized Gifts For     Life's Most Meaningful Moments <br> Make any occasion special with a personalized gift.</p>
+              <p>You can find the perfect item for your recipient with MynameCustom.</p>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
       </div>
     </div>
-  </div>
+    <div class="container-fluid copyright text-center">
+      <p>© Mynamecustom.com 2019-2022</p>
+    </div>
+  </footer>
 </template>
 
 <script>
+import InfoRouter from '@/router/modules/info'
+import QuickRouter from '@/router/modules/quick'
 export default {
   // 定义属性
   data() {
     return {
       icon: require('img/beian.png'),
-      activeName: 'tab0',
-      list: [
-        {
-          id: 1,
-          title: '安徽省商务厅',
-          link: 'http://commerce.ah.gov.cn'
-        }
-      ]
+      infoList: InfoRouter,
+      quickList: QuickRouter,
+      formData: {},
+      rules: {
+        email: [
+          { required: true, message: 'Please enter your email', trigger: 'blur' },
+          { type: 'email', message: 'Please enter the correct email', trigger: ['blur', 'change'] }
+        ]
+      }
+    }
+  },
+  computed: {
+    device({ $store }) {
+      return $store.getters.device
+    }
+  },
+  methods: {
+    onSubmit(form) {
+      this.$refs[form].validate((valid) => {
+        // if (valid) {
+        // }
+      })
     }
   }
 }
@@ -47,73 +136,165 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/variables';
 @import '~@/styles/mixin';
+.svg-16 {
+  vertical-align: middle;
+}
+.el-button--default {
+  color: $grayLinkColor;
+}
 .footer-container {
-  padding: 20px 0;
-  // box-shadow: 0 -15px 30px rgba($color: #000000, $alpha: .1);
-  background-color: #333;
-  .title {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #fff;
-  }
-  .desc {
-    line-height: 28px;
-    color: #999;
-  }
-  .copyright {
-    margin-top: 20px;
-    padding: 10px;
-    line-height: 28px;
-    border-top: 1px dashed #666; //ccc
-    color: #666;
-    p {
-      margin-top: 10px;
-    }
-    .icon {
-      position: relative;
-      top: -1px;
-      width: 20px;
-      height: 20px;
-      vertical-align: middle;
-    }
-    a {
-      margin: 0 15px;
-      &:hover {
-        color: $mainColor;
+  background-color: $grayBgColor;
+  color: $mainColor;
+  .el-input {
+    ::v-deep {
+      .el-input__inner {
+        height: 46px;
+        line-height: 46px;
+        border: none;
+        color: $grayLinkColor;
+      }
+      .el-input__prefix {
+        padding: 1px 15px 0;
+        color: $grayLinkColor;
       }
     }
   }
-}
-.list {
-  li {
-    margin-bottom: 4px;
-    line-height: 36px;
+  .el-button {
+    padding: 15px 15px;
   }
-  a {
-    display: block;
-    overflow: hidden;
-    color: #999;
-    h5 {
-      font-size: 14px;
+  .el-input--prefix {
+    ::v-deep {
+       .el-input__inner {
+          padding-left: 48px;
+      }
     }
-    &:hover {
-      color: $mainColor;
-      h5 {
-        &::before {
+  }
+  .el-input--suffix {
+    ::v-deep {
+      .el-input__inner {
+          padding-right: 48px;
+      }
+    }
+  }
+  .footer-nav {
+    dl {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+    dt {
+      margin-bottom: 16px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+    dd {
+      line-height: 32px;
+      a {
+        position: relative;
+        display: inline-block;
+        color: $grayLinkColor;
+        line-height: 24px;
+        vertical-align: middle;
+        transition: all 3s;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 0;
+          height: 1px;
           background-color: $mainColor;
+          transition: all .3s ease;
+        }
+      }
+      &:hover {
+        a {
+          color: #000;
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+    ::v-deep {
+      .desc {
+        margin-top: 16px;
+        line-height: 24px;
+        color: #666;
+      }
+      .subscribe {
+        padding: 8px;
+        color: #666;
+        line-height: 24px;
+      }
+      .el-form {
+        margin-top: 15px;
+      }
+    }
+  }
+  .el-collapse {
+    ::v-deep {
+      .list {
+        line-height: 32px;
+        a {
+          position: relative;
+          display: inline-block;
+          color: $grayLinkColor;
+          line-height: 24px;
+          vertical-align: middle;
+          transition: all 3s;
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
+            background-color: $mainColor;
+            transition: all .3s ease;
+          }
+        }
+        &:hover {
+          a {
+            color: #000;
+            &::after {
+              width: 100%;
+            }
+          }
         }
       }
     }
   }
-}
-@media only screen and (max-width:767px){
-  .list li {
-    width: auto;
+  .copyright {
+    padding-top: 20px;
+    padding-bottom: 32px;
+    line-height: 28px;
+    font-size: 14px;
   }
-  .copyright .icon {
-    display: block;
-    margin: 0 auto;
+}
+@media only screen and (max-width: 1023px) {
+  .border-bottom {
+    border-bottom: none;
+  }
+  .border-right {
+    border-right: none;
+  }
+  .footer-container {
+    .footer-nav {
+      padding-top: 30px;
+      dl {
+        padding-top: 0px;
+        padding-bottom: 30px;
+      }
+    }
+  }
+
+}
+@media only screen and (min-width:768px){
+  .order {
+    &-1 { order: 1; }
+    &-2 { order: 2; }
+    &-3 { order: 3; }
+    &-4 { order: 4; }
   }
 }
 

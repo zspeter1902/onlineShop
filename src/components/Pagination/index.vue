@@ -11,7 +11,7 @@
       next-text="»"
       :total="total"
       v-bind="$attrs"
-      :pager-count="mobile ? 4 : 7"
+      :pager-count="5"
       :small="mobile"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -104,7 +104,7 @@ export default {
 <style lang="scss" scoped>
 @import '~@/styles/variables';
 .pagination-container {
-  padding: 20px 0;
+  margin-top: 40px;
   text-align: center;
   &.text-right {
     text-align: right;
@@ -126,27 +126,35 @@ export default {
       }
     }
     .el-pagination {
+      padding: 0;
       &.is-background {
         .el-pager {
           li {
+            &:hover, &:focus {
+              background-color: #f3f3f3;
+            }
             &:not(.disabled).active {
-              background-color: $mainColor;
-              border-color: $mainColor;
-              color: #fff;
+              min-width: 44px;
+              height: 44px;
+              line-height: 44px;
+              background-color: #f3f3f3;
+              // border-color: $mainColor;
             }
           }
         }
         .btn-next, .btn-prev, .el-pager li{
-          padding: 0 5px;
+          padding: 0px;
           min-width: 40px;
-          margin: 0 5px;
+          margin: 0 4px;
           height: 40px;
-          line-height: 38px;
-          font-size: 12px;
-          border: 1px solid rgba(0,0,0,0.15);
+          line-height: 40px;
+          font-size: 16px;
+          // border: 1px solid rgba(0,0,0,0.15);
           background-color: #fff;
-          color: #333;
+          color: $mainColor;
+          border-radius: 24px;
           font-weight: normal;
+          vertical-align: middle;
           transition: all 0.3s;
           &:hover, &:focus{
             color: $mainColor;
@@ -171,18 +179,30 @@ export default {
       }
       span:not([class*=suffix]) {
         min-width: 48px;
-        font-size: 18px;
+        font-size: 16px;
         height: auto;
         color: rgba(0, 0, 0, 0.65);
         vertical-align: middle;
       }
       &--small {
         &.is-background {
+          .el-pager {
+            li {
+              &.more {
+                min-width: 24px;
+              }
+              &:not(.disabled).active {
+                min-width: 32px;
+                height: 32px;
+                line-height: 32px;
+              }
+            }
+          }
           .btn-next, .btn-prev, .el-pager li{
-            min-width: 28px;
-            margin: 0 3px;
+            min-width: 32px;
             height: 32px;
-            line-height: 30px;
+            font-size: 14px;
+            line-height: 32px;
           }
         }
         span:not([class*=suffix]) {

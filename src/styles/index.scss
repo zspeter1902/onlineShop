@@ -6,11 +6,14 @@
 
 @font-face {  font-family: SF-Heading-font;  font-weight:400;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Regular.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Heading-font;  font-weight:500;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Medium.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Heading-font;  font-weight:600;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-SemiBold.ttf?v=1618297125);  font-display: swap;}
 @font-face {  font-family: SF-Body-font;  font-weight:400;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Regular.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Body-font;  font-weight:500;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-Medium.ttf?v=1618297125);  font-display: swap;}@font-face {  font-family: SF-Body-font;  font-weight:600;  src: url(https://cdn.shopify.com/s/files/1/0561/2742/2636/files/Jost-SemiBold.ttf?v=1618297125);  font-display: swap;}:root {  --font-stack-body: 'SF-Body-font';  --font-weight-body: 400;;}
-
+.font {
+  font-family: var(--font-stack-body);
+  font-size: 16px;
+}
 body {
   height: 100%;
   font-size: 16px;
-  color: #333;
+  color: $mainColor;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -117,11 +120,62 @@ div:focus {
 .bg-red {
   background-color: #da3f3f;
 }
+.text-color-secondary {
+  color: $grayLinkColor;
+}
 .no-border {
   border: none;
 }
+.border-bottom {
+  border-bottom: 1px solid #dedede;
+}
+.border-right {
+  border-right: 1px solid #dedede;
+}
+.w-full {
+  width: 100%;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+// svg
+.svg-12 {
+  font-size: 12px;
+}
+.svg-16 {
+  font-size: 16px;
+}
+.svg-18 {
+  font-size: 18px;
+}
+.svg-20 {
+  font-size: 20px;
+}
+.svg-22 {
+  font-size: 22px;
+}
+.svg-24 {
+  font-size: 24px;
+}
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+// font
+.font-medium {font-weight: 500;}
+.font-light{font-weight:300}
+.font-semibold{font-weight:600}
+.font-bold{font-weight:700}
+.font-normal{font-weight:400}
 // main-container global css
-.container {
+.container-fluid {
   position: relative;
   max-width: 1750px;
   width: 100%;
@@ -129,18 +183,35 @@ div:focus {
   padding-right: 65px;
   margin: 0 auto;
 }
+.container {
+  max-width: $containerWidth;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.align-baseline {
+  vertical-align: baseline;
+}
 // ::selection {
 //   color: #fff;
 //   background-color: $mainColor;
 // }
-@media only screen and (max-width:1536px){
+@media only screen and (min-width:1536px){
   .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media only screen and (max-width:1536px){
+  .container-fluid {
     padding-left: 52px;
     padding-right: 52px;
   }
 }
 @media only screen and (max-width:1024px){
-  .container {
+  .container-fluid {
     padding-left: 16px;
     padding-right: 16px;
   }

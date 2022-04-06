@@ -29,7 +29,7 @@ export default {
     // https://vuejs.org/v2/style-guide/index.html#Private-property-names-essential
     $_isMobile() {
       const rect = body.getBoundingClientRect()
-      return rect.width - 1 < WIDTH
+      return rect.width < WIDTH
     },
     $_resizeHandler() {
       if (!document.hidden) {

@@ -1,5 +1,5 @@
 <template>
-  <el-breadcrumb class="app-breadcrumb" separator="/">
+  <el-breadcrumb class="app-breadcrumb" separator=">">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
         <span v-if="item.redirect==='noRedirect'||index==levelList.length-1" class="no-redirect">{{ item.meta.title }}</span>
@@ -33,7 +33,7 @@ export default {
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/index', meta: { title: '首页' }}].concat(matched)
+        matched = [{ path: '/index', meta: { title: 'Home' }}].concat(matched)
       }
 
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
@@ -64,39 +64,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/styles/variables';
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
-  font-size: 16px;
-  line-height: 50px;
+  font-size: 15px;
+  line-height: 30px;
   // margin-left: 8px;
-  margin: 20px 0;
+  margin: 0;
 
   .no-redirect {
-    color: #97a8be;
+    display: inline-block;
+    padding: 8px;
+    color: $mainColor;
     cursor: text;
   }
   ::v-deep {
     .el-breadcrumb__separator {
       font-weight: 300;
+      font-size: 12px;
+      font-family: serif;
+      color: #9ca3af;
     }
-  }
-}
-@media only screen and (max-width: 1199px) {
-  .app-breadcrumb.el-breadcrumb {
-    line-height: 44px;
-    margin: 15px 0;
-  }
-}
-@media only screen and (max-width: 991px) {
-  .app-breadcrumb.el-breadcrumb {
-    line-height: 40px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .app-breadcrumb.el-breadcrumb {
-    font-size: 14px;
-    line-height: 30px;
-    margin: 10px 0;
+    .el-breadcrumb__inner a {
+      display: inline-block;
+      padding: 8px;
+      color: #9ca3af;
+      &:hover {
+        color: $mainColor;
+      }
+    }
   }
 }
 </style>

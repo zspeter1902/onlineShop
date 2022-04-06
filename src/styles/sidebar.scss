@@ -25,28 +25,51 @@
       display: none;
     }
 
-    a {
-      display: inline-block;
-    }
-
     .el-menu {
       border: none;
       height: 100%;
+      display: flex;
+      a {
+        display: inline-block;
+      }
     }
 
     // menu hover
     .submenu-title-noDropdown,
     .el-submenu__title {
       &:hover {
-        color: $menuHover !important;
         background-color: transparent;
       }
     }
 
-    .is-active>.el-submenu__title {
-      color: $subMenuActiveText !important;
+    .el-menu-item, .el-submenu__title {
+      height: 60px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 60px;
+      &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background-color: currentColor;
+        left: 20px;
+        bottom: 12px;
+        transition: width .2s ease-in-out;
+      }
+      &:hover::after {
+        width: calc(100% - 40px);
+      }
     }
-
+    .el-submenu__icon-arrow {
+      position: static;
+      vertical-align: middle;
+      margin-left: 6px;
+      margin-top: 0px;
+      color: currentColor;
+      font-size: 10px;
+      font-weight: 600;
+    }
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
       // min-width: $sideBarWidth !important;
@@ -129,15 +152,18 @@
 
     .sidebar-container {
       transition: transform .28s;
+      max-width: 450px;
       width: $sideBarWidth !important;
       height: 100%;
       position: fixed;
       top: 0;
       bottom: 0;
       left: 0;
+      padding-top: 32px;
       z-index: 2001;
       background-color: $menuBg;
       .el-menu {
+        display: block;
         text-align: left;
         width: 100% !important;
       }
@@ -149,12 +175,19 @@
       }
       & .nest-menu .el-submenu>.el-submenu__title,
       & .el-submenu .el-menu-item {
+        max-width: 450px;
         min-width: $sideBarWidth !important;
         background-color: $subMenuBg !important;
 
         &:hover {
           background-color: $subMenuBg !important;
         }
+      }
+      .el-submenu__icon-arrow {
+        position: absolute;
+        transform: rotate(-90deg);
+        margin-top: -8px;
+        font-size: 18px;
       }
     }
     .sidebar-logo-container {
@@ -182,9 +215,14 @@
     }
   }
 }
-@media only screen and (max-width:991px){
+@media only screen and (max-width:1023px){
   #app {
     .sidebar-container {
+      .el-menu-item, .el-submenu__title {
+        &::after {
+          display: none;
+        }
+      }
       .el-menu-item {
         padding: 0 15px;
       }

@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
-const white = '/my/info' // no redirect whitelist
+const white = ['/account/info', '/account/address'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -21,7 +21,8 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
     } else {
       try {
-        next({ ...to, replace: true })
+        // next({ ...to, replace: true })
+        next()
       } catch (error) {
         await store.dispatch('user/resetToken')
         Message.error(error || 'Has Error')
@@ -30,13 +31,8 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-    if (to.path.indexOf(white) !== -1) {
+    if (white.includes(to.path)) {
       // in the free login whitelist, go directly
-      Message({
-        type: 'error',
-        message: '登录状态失效，请重新登录！',
-        duration: 6000
-      })
       next('/index')
     } else {
       // other pages that do not have permission to access are redirected to the login page.
